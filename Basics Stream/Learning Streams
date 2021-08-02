@@ -1,0 +1,89 @@
+//Filtering via a stream
+		List<Product> productsList = new ArrayList<>();
+		
+		productsList.add(new Product(1, "HP Laptop", 25000));
+		productsList.add(new Product(2, "Dell Laptop", 30000));
+		productsList.add(new Product(3, "Lenevo Laptop", 28000));
+		productsList.add(new Product(4, "Sony Laptop", 28000));
+		productsList.add(new Product(5, "Apple Laptop", 90000));
+		
+		List<Double> productPriceList2 = productsList.stream()
+				.filter(k -> k.price > 30000)
+				.map(k -> k.price)
+				.collect(Collectors.toList());
+		
+		//k is the object in the stream 
+		//So this code is basically saying 
+		//take this object in the stream k and look at the price instance variable 
+		//if that price is > 30k then take that object and map it and then add it to this new 
+		//list. 
+		
+		System.out.println(productPriceList2);
+		
+		//Iterating with Stream 
+		
+		//starting at 1, then going infinite and 
+		//adding 1 to the previous number every time 
+		//Then it filters and only shows numbers that have no remainder 
+		//when divided by 5.
+		//It also limits how many to print instead of infinite via the limit() 
+		//method with a 5. 
+		Stream.iterate(1, element -> element + 1)
+			.filter(element -> element%5 == 0)
+			.limit(5)
+			.forEach(System.out::println);
+		
+		
+		//Combing filtering and iterating 
+		//Filters the original list for prices that are only equal to 30k
+		//Then performs the forEach loop via the method to print the name of 
+		//the object that is in the stream. 
+		productsList.stream().filter(p -> p.price == 30000)
+			.forEach(p -> System.out.println(p.name));
+		
+		//Min and Max via stream 
+		//It creates a stream from the list 
+		//Then via the max() method 
+		//and takes two products 1 and 2. via lambda expression 
+		//creates a ternary operation comparing the price of 1 and 2 
+		//and keeps comparing until it reaches the end of the stream. 
+		Product productA = productsList.stream()
+				.max((product1, product2) -> product1.price > product2.price ? 1: -1)
+				.get();
+		System.out.println(productA.price);
+		
+		//Min would be the same way. 
+		Product productB = productsList.stream()
+				.min((product1, product2)->product1.price > product2.price ? 1: -1)
+				.get();    
+        System.out.println(productB.price);   
+        
+        //Counting 
+        //Filters the objects with only price lower than 30k
+        //Then the count() method adds 1 to the amount of objects 
+        //that fulfill this criteria.
+        long count = productsList.stream()
+        		.filter(p -> p.price < 30000)
+        		.count();
+        
+        System.out.println(count);
+        
+        
+        //List -> Set
+        
+        Set<Double> productPriceList = productsList.stream()
+        		.filter(p -> p.price < 30000)
+        		.map(p -> p.price)
+        		.collect(Collectors.toSet());
+        
+        System.out.println(productPriceList);
+        
+        
+        //List -> Map
+        //just like for sets can just collect them all it seems 
+        //and the toMap() method takes a lambda expression? 
+        //that lists what the key and value pairs should be 
+        Map<Integer, String> productPriceMap = productsList.stream()
+        		.collect(Collectors.toMap(p -> p.id, p -> p.name));
+        
+        System.out.println(productPriceMap);
