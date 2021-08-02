@@ -1,0 +1,113 @@
+interface SaySomething {
+	public String speak();
+}
+
+interface AdditionMath {
+	public int add(int a, int b);
+}
+
+class SimpleMath implements AdditionMath {
+	AdditionMath adding = (a, b) -> (a + b);
+
+	//probably dumb to do 
+	//better to just implement it normally in a class
+	@Override
+	public int add(int a, int b) {
+		
+		return adding.add(a, b);
+	}
+
+		
+}
+
+interface StudentInterface {
+	Student get(String str, int id);
+}
+
+class Student {
+	private String name;
+	private int id;
+	
+	Student(String name, int id) {
+		this.name = name;
+		this.id = id;
+		//System.out.println("Name: " + this.name + " ID: " + this.id);
+	}
+	
+	String getName() {
+		return name;
+	}
+	
+	int getId() {
+		return id;
+	}
+	
+	void setName(String name) {
+		this.name = name;
+	}
+}
+
+
+
+
+Code testing out aspects of the method. 
+
+//System.out.println("Test");
+		
+		//Lambda Practice
+		//Only works if the interface has 1 abstract method 
+		//Will not work with interfaces with multiple abstract methods 
+		//defining the body of the abstract method outside the interface 
+		
+		//essentially implementing the abstract method 
+		//that was defined in the interface 
+		//passing in parameters or no parameters depending. 
+		SaySomething s = () -> {
+			return "Testing lambda expressions.";
+		};
+		
+		int a = 2;
+		int b = 6;
+		
+		AdditionMath result = (c, d) -> {
+			return c + d;
+		};
+		
+		//even if a return type is given for the abstract method 
+		//the lambda expression body does not need to actually return.
+		//can just do what is shown in result2 and work fine. 
+		//only need return keyword when its multiple statements. 
+		AdditionMath result2 = (e, f) -> (e + f);
+		System.out.println(result2.add(10, 1));
+		
+		System.out.println(s.speak());
+		
+		System.out.println(result.add(a, b));
+		
+		List<String> list = new ArrayList<>();
+		
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		list.add("4");
+		
+		list.forEach((n) -> System.out.println(n));
+		
+		//Method References 
+		
+		//these lines create instances of StudentInterface 
+		//They are not instances of Student but StudentInterface
+		//
+		StudentInterface stud = Student::new;
+		StudentInterface stud2 = Student::new;
+		
+		//these are temp
+		//you can't set it with one value and expect the same ones 
+		//After this line those values are gone.
+		System.out.println(stud.get("Sam", 23).getName());
+		stud.get("John", 24).getId();
+		
+		int idStud2 = stud2.get("Joe", 45).getId();
+		System.out.println(idStud2);
+		
+		System.out.println(stud instanceof Student); //prints false
