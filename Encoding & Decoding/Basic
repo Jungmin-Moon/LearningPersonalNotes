@@ -1,0 +1,38 @@
+//all special chars can be encoded by base.
+		String test = "&";
+		
+		String encodedTest = Base64.getEncoder().encodeToString(test.getBytes());
+		
+		//System.out.println(encodedTest);
+		
+		byte[] decodedBytes = Base64.getDecoder().decode(encodedTest);
+		
+		for(byte i : decodedBytes) {
+			System.out.print(i + " ");
+		}
+		
+		System.out.println();
+		
+		String decodedString = new String(decodedBytes);
+		
+		System.out.println(decodedString);
+		
+		Base64.Encoder encoder = Base64.getEncoder();
+		
+		String test2 = "username:password";
+		
+		String encodeString = encoder.encodeToString(test2.getBytes());
+		
+		System.out.println("Test 2 looks like this encoded: " + encodeString);
+		
+		Base64.Decoder decoder = Base64.getDecoder();
+		
+		byte[] decodedByteArray = decoder.decode(encodeString);
+		
+		System.out.println("The original string: " + new String(decodedByteArray));
+		
+		//very simple overall it seems outside of working with actual data. 
+		
+		//Encoder en = Base64.getEncoder();
+    
+    
